@@ -10,11 +10,11 @@ Github Desktop ve ya web browserla projeye yaptığınız katkıları commit ede
 
 Onur Bulut - onurblt
 
-Burak Göl -
+Burak Göl - burakgrds
 
-Gökhan Çaçan -
+Gökhan Çaçan - 
 
-Serkan Çelik -
+Serkan Çelik - 2160656901
 
 Murat Açıkgöz -
 
