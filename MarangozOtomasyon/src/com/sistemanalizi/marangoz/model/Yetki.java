@@ -1,8 +1,8 @@
 package com.sistemanalizi.marangoz.model;
 
-public enum Yetki {
-	YETKISIZ,
-	DEPO_GOREVLISI,
-	URETIM_MUDURU,
-	ADMIN	
+public class Yetki {
+	static int YETKISIZ=0;
+	static int DEPO_GOREVLISI=1;
+	static int URETIM_MUDURU=2;
+	static int ADMIN=3;
 }
