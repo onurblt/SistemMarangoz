@@ -3,8 +3,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="images"/>
-	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="miglayout15-swing.jar"/>
-	<classpathentry kind="lib" path="C:/java-oxygen/jfxrt.jar"/>
+	<classpathentry kind="lib" path="C:/work/GitHub/jfxrt.jar"/>
+	<classpathentry kind="lib" path="C:/work/GitHub/SistemMarangoz/deps/ini4j-0.5.4.jar"/>
+	<classpathentry kind="lib" path="C:/work/GitHub/SistemMarangoz/deps/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/work/GitHub/SistemMarangoz/deps/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="C:/work/GitHub/SistemMarangoz/deps/mssql-jdbc-6.4.0.jre8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
