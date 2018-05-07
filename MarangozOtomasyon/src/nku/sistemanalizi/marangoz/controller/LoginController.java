@@ -18,9 +18,9 @@ public class LoginController {
 			// Establish the connection. 
 			SQLServerDataSource ds = new SQLServerDataSource();
 			ds.setIntegratedSecurity(true);
-			ds.setServerName(DBAyari.sunucu);
-			ds.setPortNumber(DBAyari.port); 
-			ds.setDatabaseName(DBAyari.dbAdi);
+			ds.setServerName(DB.sunucu);
+			ds.setPortNumber(DB.port); 
+			ds.setDatabaseName(DB.dbAdi);
 			con = ds.getConnection();
 			 
 	        	// Execute a stored procedure that returns some data.

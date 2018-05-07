@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -30,26 +32,38 @@ import com.toedter.calendar.JMonthChooser;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
+
 import javax.swing.JSlider;
 import java.awt.Canvas;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Date;
+import java.beans.PropertyChangeEvent;
 
 public class YoneticiRapor extends JFrame {
 
 	private JPanel contentPane;
 	int pX,pY;
-	
+	public int x=0;
 	JPanel panelMenu;
 	JPanel icerikPanel;
 	JPanel panel_3;
+	ChartPanel chartpanel;
+	
 	private JTable table;
 	private JTable table_1;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	
-	/**
-	 * Launch the application.
-	 */
+	JDateChooser dcBitis; 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -114,7 +128,9 @@ public class YoneticiRapor extends JFrame {
 		label_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				x=0;
 				dispose();
+				
 			}
 		});
 		label_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -179,30 +195,59 @@ public class YoneticiRapor extends JFrame {
 		icerikPanel.add(panel_3, "name_4532427943942");
 		panel_3.setLayout(null);
 		
-		JButton button_3 = new JButton("Raporlama");
-		button_3.addMouseListener(new MouseAdapter() {
+		JButton btnRaporktsAl = new JButton("Rapor G\u00F6ster");
+		btnRaporktsAl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+					
+					Date baslangic = dcBaslangic.getDate();
+					Date bitisi = dcBitis.getDate();
+					
+					DefaultPieDataset piedataset  =  new  DefaultPieDataset();
+					piedataset.setValue("Tüm Gelirler", new Integer(300));
+					piedataset.setValue("Personel", new Integer(150));
+					piedataset.setValue("Malzeme", new Integer(20));
+					piedataset.setValue("Elektrik", new Integer(20));
+					piedataset.setValue("Su", new Integer(10));
+					piedataset.setValue("Diðer", new Integer(40));
+					
+					
+					JFreeChart chart = ChartFactory.createPieChart("Gelir Gider Tablosu",piedataset,true,true,true);
+					chartpanel.setChart(chart);
+					chartpanel.setVisible(true);
+					
+				
 			}
 		});
-		button_3.setBounds(902, 576, 147, 34);
-		panel_3.add(button_3);
+		btnRaporktsAl.setBounds(869, 569, 147, 34);
+		panel_3.add(btnRaporktsAl);
 		
-		JLabel lblTarihAral = new JLabel("Ba\u015Flang\u0131\u00E7 Tarihi");
-		lblTarihAral.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTarihAral.setBounds(64, 74, 146, 20);
-		panel_3.add(lblTarihAral);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(206, 74, 95, 20);
-		panel_3.add(dateChooser);
+		dcBitis = new JDateChooser();
+		dcBitis.getCalendarButton().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		dcBitis.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				//JOptionPane.showMessageDialog(null, "message");
+				
+			}
+		});
+		chartpanel = new ChartPanel(null);
+		chartpanel.setBounds(50, 389, 485, 246);
+		panel_3.add(chartpanel);
+		chartpanel.setVisible(false);
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(622, 74, 95, 20);
-		panel_3.add(dateChooser_1);
+		
+		dcBitis.setBounds(622, 74, 95, 20);
+		panel_3.add(dcBitis);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(64, 182, 476, 152);
+		scrollPane.setBounds(68, 186, 476, 152);
 		panel_3.add(scrollPane);
 		
 		table = new JTable();
@@ -215,13 +260,8 @@ public class YoneticiRapor extends JFrame {
 		));
 		scrollPane.setViewportView(table);
 		
-		JLabel label = new JLabel("Biti\u015F Tarihi");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		label.setBounds(447, 74, 146, 20);
-		panel_3.add(label);
-		
 		JLabel lblGelirlerTablosu = new JLabel("Gelirler Tablosu");
-		lblGelirlerTablosu.setBounds(63, 145, 130, 23);
+		lblGelirlerTablosu.setBounds(67, 149, 130, 23);
 		panel_3.add(lblGelirlerTablosu);
 		
 		JLabel label_3 = new JLabel("GiderlerTablosu");
@@ -243,7 +283,7 @@ public class YoneticiRapor extends JFrame {
 		scrollPane_1.setViewportView(table_1);
 		
 		JLabel lblGelirToplam = new JLabel("Gelir Toplam");
-		lblGelirToplam.setBounds(64, 349, 111, 20);
+		lblGelirToplam.setBounds(68, 353, 111, 20);
 		panel_3.add(lblGelirToplam);
 		
 		JLabel label_4 = new JLabel("Gider Toplam");
@@ -251,78 +291,39 @@ public class YoneticiRapor extends JFrame {
 		panel_3.add(label_4);
 		
 		textField = new JTextField();
-		textField.setBounds(152, 349, 86, 20);
+		textField.setEditable(false);
+		textField.setBounds(156, 353, 86, 20);
 		panel_3.add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.setEditable(false);
 		textField_1.setBounds(954, 349, 86, 20);
 		panel_3.add(textField_1);
 		textField_1.setColumns(10);
 		
 		JLabel label_5 = new JLabel("Toplam Kazan\u00E7");
-		label_5.setBounds(463, 576, 111, 20);
+		label_5.setBounds(585, 569, 111, 20);
 		panel_3.add(label_5);
 		
 		textField_2 = new JTextField();
+		textField_2.setEditable(false);
 		textField_2.setColumns(10);
-		textField_2.setBounds(575, 576, 86, 20);
+		textField_2.setBounds(697, 569, 86, 20);
 		panel_3.add(textField_2);
 		
-		Canvas canvas = new Canvas();
-		canvas.setBackground(new Color(255, 140, 0));
-		canvas.setBounds(378, 402, 339, 157);
-		panel_3.add(canvas);
+		JLabel lblBitiTarihi = new JLabel("Biti\u015F Tarihi");
+		lblBitiTarihi.setBounds(505, 74, 86, 20);
+		panel_3.add(lblBitiTarihi);
 		
-		Canvas canvas_1 = new Canvas();
-		canvas_1.setBackground(new Color(220, 20, 60));
-		canvas_1.setBounds(870, 375, 27, 20);
-		panel_3.add(canvas_1);
+		JLabel label = new JLabel("Ba\u015Flang\u0131\u00E7 Tarihi");
+		label.setBounds(156, 74, 131, 20);
+		panel_3.add(label);
 		
-		Canvas canvas_2 = new Canvas();
-		canvas_2.setBackground(new Color(255, 0, 255));
-		canvas_2.setBounds(870, 401, 27, 20);
-		panel_3.add(canvas_2);
 		
-		Canvas canvas_3 = new Canvas();
-		canvas_3.setBackground(new Color(30, 144, 255));
-		canvas_3.setBounds(870, 427, 27, 20);
-		panel_3.add(canvas_3);
 		
-		Canvas canvas_4 = new Canvas();
-		canvas_4.setBackground(new Color(255, 255, 0));
-		canvas_4.setBounds(870, 453, 27, 20);
-		panel_3.add(canvas_4);
 		
-		Canvas canvas_5 = new Canvas();
-		canvas_5.setBackground(new Color(160, 82, 45));
-		canvas_5.setBounds(870, 479, 27, 20);
-		panel_3.add(canvas_5);
 		
-		JLabel lblpersonelOdemeleri = new JLabel("Personel Odemeleri");
-		lblpersonelOdemeleri.setBounds(912, 375, 137, 14);
-		panel_3.add(lblpersonelOdemeleri);
-		
-		JLabel label_6 = new JLabel("Malzeme \u00D6demeleri");
-		label_6.setBounds(912, 401, 137, 14);
-		panel_3.add(label_6);
-		
-		JLabel label_7 = new JLabel("Elektrik");
-		label_7.setBounds(912, 433, 104, 14);
-		panel_3.add(label_7);
-		
-		JLabel label_8 = new JLabel("Su");
-		label_8.setBounds(912, 459, 104, 14);
-		panel_3.add(label_8);
-		
-		JLabel label_9 = new JLabel("Di\u011Fer Masraflar");
-		label_9.setBounds(912, 485, 104, 14);
-		panel_3.add(label_9);
-		
-		Canvas canvas_6 = new Canvas();
-		canvas_6.setBackground(new Color(50, 205, 50));
-		canvas_6.setBounds(64, 375, 27, 20);
-		panel_3.add(canvas_6);
 		
 		JLabel lblYoneticiRaporleri = new JLabel("RAPORLAMA");
 		lblYoneticiRaporleri.setForeground(new Color(255, 255, 255));
@@ -331,7 +332,7 @@ public class YoneticiRapor extends JFrame {
 		lblYoneticiRaporleri.setBounds(550, 33, 276, 28);
 		contentPane.add(lblYoneticiRaporleri);
 		
-		
+
 		
 		
 		setUndecorated(true);

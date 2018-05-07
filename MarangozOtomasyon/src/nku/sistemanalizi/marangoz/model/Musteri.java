@@ -19,5 +19,4 @@ public class Musteri {
 	public Date olusturmaTarihi;
 	public Date duzenlemeTarihi;
 	public int statu;
-	public int aktif;
 }

@@ -11,4 +11,5 @@ public class Malzeme {
 	public String hammadde;
 	public String renk;
 	public Ebat ebat;
+	public int statu;
 }

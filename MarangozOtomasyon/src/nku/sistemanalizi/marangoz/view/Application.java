@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import nku.sistemanalizi.marangoz.controller.DBAyari;
+import nku.sistemanalizi.marangoz.controller.DB;
 import nku.sistemanalizi.marangoz.controller.LoginController;
 import com.sun.javafx.font.Disposer;
 

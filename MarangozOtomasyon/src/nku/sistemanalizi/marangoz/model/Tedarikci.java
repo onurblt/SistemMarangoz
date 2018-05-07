@@ -13,8 +13,7 @@ public class Tedarikci {
 	public String soyad;
 	public String tel1;
 	public String tel2;
-	public String firma;
-	public String unvan;
+	public String unvan;//Firma Adi
 	public String adres;
 	public String email;
 	public int aktif;

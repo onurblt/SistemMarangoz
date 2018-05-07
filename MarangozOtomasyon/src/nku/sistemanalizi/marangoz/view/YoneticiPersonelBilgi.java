@@ -12,7 +12,10 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.SwingConstants;
@@ -23,6 +26,8 @@ import javax.swing.border.BevelBorder;
 import java.awt.GridLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import com.toedter.calendar.JDateChooser;
@@ -43,6 +48,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.JCheckBox;
+import javax.swing.JList;
 
 public class YoneticiPersonelBilgi extends JFrame {
 
@@ -53,22 +60,22 @@ public class YoneticiPersonelBilgi extends JFrame {
 	JPanel icerikPanel;
 	JPanel panel_2;
 	JPanel panel_3;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_4;
+	private JTextField tfAdKayit;
+	private JTextField tfSoyadKayit;
+	private JTextField tfTCNoKayit;
+	private JTextField tfMailKayit;
 	private JTextField textField_6;
 	private JTextField tfAd2;
 	private JTextField tfSoyad2;
 	private JTextField tfTCno2;
-	private JTextField textField_9;
+	private JTextField tfEmail;
 	private JTextField textField_10;
 	private JTextField textField_11;
 	private JTable table;
 	private JTextField textField_20;
-	private JTextField textField_21;
-	private JTextField textField_5;
-	private JTextField textField_22;
+	private JTextField tfTelefonKayit;
+	private JTextField tfSifreKayit;
+	private JTextField tfKullaniciAdiKayit;
 
 	/**
 	 * Launch the application.
@@ -226,28 +233,28 @@ public class YoneticiPersonelBilgi extends JFrame {
 		lblAd.setBounds(28, 41, 59, 14);
 		panel_2.add(lblAd);
 
-		textField = new JTextField();
-		textField.setBounds(122, 38, 136, 20);
-		panel_2.add(textField);
-		textField.setColumns(10);
+		tfAdKayit = new JTextField();
+		tfAdKayit.setBounds(122, 38, 136, 20);
+		panel_2.add(tfAdKayit);
+		tfAdKayit.setColumns(10);
 
 		JLabel label = new JLabel("Soyad*");
 		label.setBounds(28, 72, 46, 14);
 		panel_2.add(label);
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(122, 69, 136, 20);
-		panel_2.add(textField_1);
-		textField_1.setColumns(10);
+		tfSoyadKayit = new JTextField();
+		tfSoyadKayit.setBounds(122, 69, 136, 20);
+		panel_2.add(tfSoyadKayit);
+		tfSoyadKayit.setColumns(10);
 
 		JLabel label_3 = new JLabel("T.C No*");
 		label_3.setBounds(28, 103, 59, 14);
 		panel_2.add(label_3);
 
-		textField_2 = new JTextField();
-		textField_2.setBounds(122, 100, 136, 20);
-		panel_2.add(textField_2);
-		textField_2.setColumns(10);
+		tfTCNoKayit = new JTextField();
+		tfTCNoKayit.setBounds(122, 100, 136, 20);
+		panel_2.add(tfTCNoKayit);
+		tfTCNoKayit.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("Do\u011Fum T.");
 		lblNewLabel_1.setBounds(28, 136, 64, 14);
@@ -257,10 +264,10 @@ public class YoneticiPersonelBilgi extends JFrame {
 		label_4.setBounds(28, 164, 73, 14);
 		panel_2.add(label_4);
 
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(122, 161, 136, 20);
-		panel_2.add(textField_4);
+		tfMailKayit = new JTextField();
+		tfMailKayit.setColumns(10);
+		tfMailKayit.setBounds(122, 161, 136, 20);
+		panel_2.add(tfMailKayit);
 
 		JLabel label_5 = new JLabel("G\u00F6rev");
 		label_5.setBounds(28, 347, 46, 14);
@@ -314,10 +321,16 @@ public class YoneticiPersonelBilgi extends JFrame {
 		label_10.setBounds(446, 84, 35, 28);
 		panel_2.add(label_10);
 
-		JButton btnNewButton_1 = new JButton("Kaydet");
-		btnNewButton_1.setIcon(new ImageIcon(YoneticiPersonelBilgi.class.getResource("/kaydet.png")));
-		btnNewButton_1.setBounds(209, 483, 102, 23);
-		panel_2.add(btnNewButton_1);
+		JButton btnKaydet = new JButton("Kaydet");
+		btnKaydet.setIcon(new ImageIcon(YoneticiPersonelBilgi.class.getResource("/kaydet.png")));
+		btnKaydet.setBounds(209, 483, 102, 23);
+		panel_2.add(btnKaydet);
+		btnKaydet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Personel personel = new Personel();
+				//personel.ad = 
+			}
+		});
 
 		JLabel lblPersonelKayt = new JLabel("Personel Kay\u0131t");
 		lblPersonelKayt.setForeground(Color.WHITE);
@@ -325,19 +338,19 @@ public class YoneticiPersonelBilgi extends JFrame {
 		lblPersonelKayt.setBounds(241, 0, 125, 27);
 		panel_2.add(lblPersonelKayt);
 
-		JButton btnYenile = new JButton("Temizle");
-		btnYenile.setIcon(new ImageIcon(YoneticiPersonelBilgi.class.getResource("/sil2.png")));
-		btnYenile.setBounds(393, 483, 102, 23);
-		panel_2.add(btnYenile);
+		JButton btnTemizle = new JButton("Temizle");
+		btnTemizle.setIcon(new ImageIcon(YoneticiPersonelBilgi.class.getResource("/sil2.png")));
+		btnTemizle.setBounds(393, 483, 102, 23);
+		panel_2.add(btnTemizle);
 
 		JLabel label_37 = new JLabel("Telefon");
 		label_37.setBounds(28, 192, 46, 14);
 		panel_2.add(label_37);
 
-		textField_21 = new JTextField();
-		textField_21.setColumns(10);
-		textField_21.setBounds(122, 189, 136, 20);
-		panel_2.add(textField_21);
+		tfTelefonKayit = new JTextField();
+		tfTelefonKayit.setColumns(10);
+		tfTelefonKayit.setBounds(122, 189, 136, 20);
+		panel_2.add(tfTelefonKayit);
 
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Se\u00E7iniz", "1-Y\u00F6netici",
@@ -345,23 +358,27 @@ public class YoneticiPersonelBilgi extends JFrame {
 		comboBox.setBounds(122, 344, 136, 20);
 		panel_2.add(comboBox);
 
-		JLabel label_39 = new JLabel("\u015Eifre");
-		label_39.setBounds(309, 375, 46, 14);
-		panel_2.add(label_39);
+		JLabel lblSifreKayit = new JLabel("\u015Eifre");
+		lblSifreKayit.setBounds(309, 375, 46, 14);
+		panel_2.add(lblSifreKayit);
 
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(403, 372, 136, 20);
-		panel_2.add(textField_5);
+		tfSifreKayit = new JTextField();
+		tfSifreKayit.setColumns(10);
+		tfSifreKayit.setBounds(403, 375, 136, 20);
+		panel_2.add(tfSifreKayit);
 
-		JLabel label_40 = new JLabel("Kullan\u0131c\u0131 Ad\u0131");
-		label_40.setBounds(309, 347, 73, 14);
-		panel_2.add(label_40);
+		JLabel lblKullaniciAdiKayit = new JLabel("Kullan\u0131c\u0131 Ad\u0131");
+		lblKullaniciAdiKayit.setBounds(309, 347, 73, 14);
+		panel_2.add(lblKullaniciAdiKayit);
 
-		textField_22 = new JTextField();
-		textField_22.setColumns(10);
-		textField_22.setBounds(403, 344, 136, 20);
-		panel_2.add(textField_22);
+		tfKullaniciAdiKayit = new JTextField();
+		tfKullaniciAdiKayit.setColumns(10);
+		tfKullaniciAdiKayit.setBounds(403, 344, 136, 20);
+		panel_2.add(tfKullaniciAdiKayit);
+		
+		JCheckBox cbHesapOlustur = new JCheckBox("Hesap olu\u015Ftur");
+		cbHesapOlustur.setBounds(309, 317, 97, 23);
+		panel_2.add(cbHesapOlustur);
 
 		panel_3 = new JPanel();
 		panel_3.setBackground(new Color(0, 250, 154));
@@ -429,9 +446,9 @@ public class YoneticiPersonelBilgi extends JFrame {
 		tfTCno2.setBounds(104, 201, 136, 20);
 		panel_3.add(tfTCno2);
 
-		JDateChooser dateChooser_2 = new JDateChooser();
-		dateChooser_2.setBounds(104, 291, 136, 20);
-		panel_3.add(dateChooser_2);
+		JDateChooser dcDogumTarihi2 = new JDateChooser();
+		dcDogumTarihi2.setBounds(104, 291, 136, 20);
+		panel_3.add(dcDogumTarihi2);
 
 		JLabel label_14 = new JLabel("Do\u011Fum T.");
 		label_14.setBounds(10, 296, 64, 14);
@@ -441,10 +458,10 @@ public class YoneticiPersonelBilgi extends JFrame {
 		label_15.setBounds(10, 324, 73, 14);
 		panel_3.add(label_15);
 
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(104, 321, 136, 20);
-		panel_3.add(textField_9);
+		tfEmail = new JTextField();
+		tfEmail.setColumns(10);
+		tfEmail.setBounds(104, 321, 136, 20);
+		panel_3.add(tfEmail);
 
 		JLabel label_16 = new JLabel("Adres");
 		label_16.setBounds(10, 390, 59, 14);
@@ -496,12 +513,12 @@ public class YoneticiPersonelBilgi extends JFrame {
 		label_20.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 0, 0), new Color(255, 0, 0),
 				new Color(255, 0, 0), new Color(255, 0, 0)));
 		label_20.setBackground(Color.WHITE);
-		label_20.setBounds(487, 185, 136, 153);
+		label_20.setBounds(626, 185, 136, 153);
 		panel_3.add(label_20);
 
 		JLabel label_21 = new JLabel("Foto\u011Fraf");
 		label_21.setBackground(Color.WHITE);
-		label_21.setBounds(418, 219, 59, 14);
+		label_21.setBounds(557, 233, 59, 14);
 		panel_3.add(label_21);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -516,18 +533,25 @@ public class YoneticiPersonelBilgi extends JFrame {
 				try {
 					tfAd2.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
 					tfSoyad2.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+					 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					try {
+						dcDogumTarihi2.setDate(formatter.parse(table.getValueAt(table.getSelectedRow(), 3).toString()));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} catch (ArrayIndexOutOfBoundsException ex) {
 				}
 			}
 		});
 		table.getColumnModel().getColumn(8).setPreferredWidth(97);
 		
-		ArrayList<Personel> liste = PersonelController.Yenile();
+		ArrayList<Personel> liste = PersonelController.Yenile(true);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		
 		for (int i = 0; i < liste.size(); i++) {
 			model.addRow(new Object[] {liste.get(i).TCno, liste.get(i).ad, liste.get(i).soyad, liste.get(i).dogumTarihi,
 					liste.get(i).email,liste.get(i).tel1,liste.get(i).adres,liste.get(i).unvan,liste.get(i).maas});
-		}
 		
 		scrollPane.setViewportView(table);
 
@@ -558,9 +582,42 @@ public class YoneticiPersonelBilgi extends JFrame {
 		JButton button_7 = new JButton("Sil");
 		button_7.setBounds(536, 481, 89, 23);
 		panel_3.add(button_7);
+		
+		JCheckBox chckAyrilanlar = new JCheckBox("\u0130\u015Ften ayr\u0131lanlar dahil");
+		chckAyrilanlar.setSelected(true);
+		chckAyrilanlar.setBounds(420, 200, 123, 23);
+		panel_3.add(chckAyrilanlar);
+		
+		chckAyrilanlar.addItemListener(new ItemListener() {
+		      public void itemStateChanged(ItemEvent e) {
+		        if(chckAyrilanlar.isSelected())
+		        {
+		        	
+		        	DefaultTableModel model = (DefaultTableModel) table.getModel();
+					model.setRowCount(0);
+		        	ArrayList<Personel> liste = PersonelController.Yenile(true);
+		    		for (int i = 0; i < liste.size(); i++) {
+		    			model.addRow(new Object[] {liste.get(i).TCno, liste.get(i).ad, liste.get(i).soyad, liste.get(i).dogumTarihi,
+		    					liste.get(i).email,liste.get(i).tel1,liste.get(i).adres,liste.get(i).unvan,liste.get(i).maas});
+		    		}
+		        }
+		        else
+		        {
+		        	DefaultTableModel model = (DefaultTableModel) table.getModel();
+					model.setRowCount(0);
+		        
+		        	ArrayList<Personel> liste = PersonelController.Yenile(false);
+		    		for (int i = 0; i < liste.size(); i++) {
+		    			model.addRow(new Object[] {liste.get(i).TCno, liste.get(i).ad, liste.get(i).soyad, liste.get(i).dogumTarihi,
+		    					liste.get(i).email,liste.get(i).tel1,liste.get(i).adres,liste.get(i).unvan,liste.get(i).maas});
+		    		}
+		        }
+		      }
+		    });
 
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 
 	}
+}
 }

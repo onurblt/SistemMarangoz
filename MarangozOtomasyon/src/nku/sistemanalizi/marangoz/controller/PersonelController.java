@@ -14,7 +14,7 @@ import nku.sistemanalizi.marangoz.view.Application;
 
 public class PersonelController {
 
-	public static ArrayList<Personel> Yenile() {
+	public static ArrayList<Personel> Yenile(boolean tumu) {
 		ArrayList<Personel> liste = new ArrayList<Personel>();
 		//liste.clear();
 
@@ -27,13 +27,13 @@ public class PersonelController {
 			// Establish the connection.
 			SQLServerDataSource ds = new SQLServerDataSource();
 			ds.setIntegratedSecurity(true);
-			ds.setServerName(DBAyari.sunucu);
-			ds.setPortNumber(DBAyari.port);
-			ds.setDatabaseName(DBAyari.dbAdi);
+			ds.setServerName(DB.sunucu);
+			ds.setPortNumber(DB.port);
+			ds.setDatabaseName(DB.dbAdi);
 			con = ds.getConnection();
 
 			// Create and execute an SQL statement that returns some data.
-			String SQL = "SELECT * FROM Personel";
+			String SQL = tumu?"SELECT * FROM Personel":"SELECT * FROM Personel WHERE Statu = 1";
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(SQL);
 
@@ -109,9 +109,9 @@ public class PersonelController {
 			// Establish the connection.
 			SQLServerDataSource ds = new SQLServerDataSource();
 			ds.setIntegratedSecurity(true);
-			ds.setServerName(DBAyari.sunucu);
-			ds.setPortNumber(DBAyari.port);
-			ds.setDatabaseName(DBAyari.dbAdi);
+			ds.setServerName(DB.sunucu);
+			ds.setPortNumber(DB.port);
+			ds.setDatabaseName(DB.dbAdi);
 			con = ds.getConnection();
 
 			// Create and execute an SQL statement that returns some data.
@@ -160,9 +160,9 @@ public class PersonelController {
 			// Establish the connection.
 			SQLServerDataSource ds = new SQLServerDataSource();
 			ds.setIntegratedSecurity(true);
-			ds.setServerName(DBAyari.sunucu);
-			ds.setPortNumber(DBAyari.port);
-			ds.setDatabaseName(DBAyari.dbAdi);
+			ds.setServerName(DB.sunucu);
+			ds.setPortNumber(DB.port);
+			ds.setDatabaseName(DB.dbAdi);
 			con = ds.getConnection();
 
 			// Create and execute an SQL statement that returns some data.
@@ -203,6 +203,7 @@ public class PersonelController {
 					return false;
 				}
 		}
+		Application.BilgiKutusu("ISLEM BASARILI", "Ekleme islemi basariyla gerceklestirildi!");
 		return true;
 	}
 
@@ -218,9 +219,9 @@ public class PersonelController {
 			// Establish the connection.
 			SQLServerDataSource ds = new SQLServerDataSource();
 			ds.setIntegratedSecurity(true);
-			ds.setServerName(DBAyari.sunucu);
-			ds.setPortNumber(DBAyari.port);
-			ds.setDatabaseName(DBAyari.dbAdi);
+			ds.setServerName(DB.sunucu);
+			ds.setPortNumber(DB.port);
+			ds.setDatabaseName(DB.dbAdi);
 			con = ds.getConnection();
 
 			// Create and execute an SQL statement that returns some data.
@@ -269,9 +270,9 @@ public class PersonelController {
 			// Establish the connection.
 			SQLServerDataSource ds = new SQLServerDataSource();
 			ds.setIntegratedSecurity(true);
-			ds.setServerName(DBAyari.sunucu);
-			ds.setPortNumber(DBAyari.port);
-			ds.setDatabaseName(DBAyari.dbAdi);
+			ds.setServerName(DB.sunucu);
+			ds.setPortNumber(DB.port);
+			ds.setDatabaseName(DB.dbAdi);
 			con = ds.getConnection();
 
 			// Create and execute an SQL statement that returns some data.
@@ -308,6 +309,7 @@ public class PersonelController {
 					return false;
 				}
 		}
+		Application.BilgiKutusu("ISLEM BASARILI", "Silme islemi basariyla gerceklestirildi!");
 		return true;
 
 	}
@@ -324,9 +326,9 @@ public class PersonelController {
 			// Establish the connection.
 			SQLServerDataSource ds = new SQLServerDataSource();
 			ds.setIntegratedSecurity(true);
-			ds.setServerName(DBAyari.sunucu);
-			ds.setPortNumber(DBAyari.port);
-			ds.setDatabaseName(DBAyari.dbAdi);
+			ds.setServerName(DB.sunucu);
+			ds.setPortNumber(DB.port);
+			ds.setDatabaseName(DB.dbAdi);
 			con = ds.getConnection();
 
 			// Create and execute an SQL statement that returns some data.
@@ -386,6 +388,82 @@ public class PersonelController {
 
 		return bulunan;
 
+	}
+	public static Personel Get(int id) {
+		Personel personel = null;
+		//liste.clear();
+
+		// Declare the JDBC objects.
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			// Establish the connection.
+			SQLServerDataSource ds = new SQLServerDataSource();
+			ds.setIntegratedSecurity(true);
+			ds.setServerName(DB.sunucu);
+			ds.setPortNumber(DB.port);
+			ds.setDatabaseName(DB.dbAdi);
+			con = ds.getConnection();
+
+			// Create and execute an SQL statement that returns some data.
+			String SQL = "SELECT * FROM Personel WHERE Personel_id="+Integer.toString(id)+";";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(SQL);
+
+			// Iterate through the data in the result set and display it.
+			if (rs.next()) {
+				personel = new Personel();
+
+				/// COK ONEMLI
+				/// DBde yetki gucu yok!!!!!
+				/// COK ONEMLI
+
+				personel.id = rs.getInt(1);
+				personel.ad = rs.getString(2);
+				personel.soyad = rs.getString(3);
+				personel.dogumTarihi = rs.getDate(4);
+				personel.TCno = rs.getString(5);
+				personel.unvan = rs.getString(6);
+				personel.tel1 = rs.getString(7);
+				personel.tel2 = rs.getString(8);
+				personel.adres = rs.getString(9);
+				personel.maas = rs.getFloat(10);
+				personel.yetki = rs.getInt(11);
+				personel.statu = rs.getInt(12);
+				personel.email = rs.getString(13);
+				
+			}
+		}
+
+		// Handle any errors that may have occurred.
+		catch (Exception e) {
+			e.printStackTrace();
+			return personel;
+		}
+
+		finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception e) {
+					return personel;
+				}
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (Exception e) {
+					return personel;
+				}
+			if (con != null)
+				try {
+					con.close();
+				} catch (Exception e) {
+					return personel;
+				}
+		}
+		return personel;
 	}
 
 }
